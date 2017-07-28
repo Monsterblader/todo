@@ -23,7 +23,14 @@ export default class TaskList extends Component {
           <hr />
 
           <div className='Example'>
-            {taskList.map((value, key) => <Task key={`task${key}`} value={value} />)}
+            {taskList.map((value, key) => <Task
+              key={`task${key}`}
+              id={value.id}
+              index={key}
+              value={value}
+              moveTask={this.props.moveTask}
+              />
+                              )}
           </div>
 
         </div>

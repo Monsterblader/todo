@@ -6,6 +6,7 @@ export const TEST_ASYNC_ACTION_START = 'TEST_ASYNC_ACTION_START';
 export const TEST_ASYNC_ACTION_ERROR = 'TEST_ASYNC_ACTION_ERROR';
 export const TEST_ASYNC_ACTION_SUCCESS = 'TEST_ASYNC_ACTION_SUCCESS';
 export const ADD_TASK = 'ADD_TASK';
+export const MOVE_TASK = 'MOVE_TASK';
 
 // Test action
 
@@ -53,5 +54,13 @@ export function addTask(task) {
   return {
     type: ADD_TASK,
     task,
+  };
+}
+
+export function moveTask(dragIndex, hoverIndex) {
+  return {
+    type: MOVE_TASK,
+    dragIndex,
+    hoverIndex,
   };
 }

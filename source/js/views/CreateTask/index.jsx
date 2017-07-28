@@ -14,6 +14,7 @@ export default class CreateTask extends Component {
     this.setState({[name]: target.value});
   }
   ;
+
       handleKeyPress = e => {
         if (e.key !== "Enter")
           return;
@@ -28,6 +29,7 @@ export default class CreateTask extends Component {
         this.setState({task: "", startDate: "", endDate: ""});
       }
   ;
+
       render() {
     const {placeholder} = this.props;
     const {task, startDate, endDate} = this.state;
