@@ -3,6 +3,7 @@ import { Map, List } from 'immutable';
 import {
 ADD_TASK,
     MOVE_TASK,
+    INDENT_TASK,
 } from 'actions/app';
 
 const initialState = Map({
@@ -20,14 +21,31 @@ const actionsMap = {
     const taskList = state.get('taskList');
     const dragTask = taskList.get(action.dragIndex);
 
-// This only works when dragging from higher index to lower index.
-// Figure out how to handle reverse.
     const shortList = taskList.delete(action.dragIndex);
     const newTaskList = shortList.insert(action.hoverIndex, dragTask);
-
     const newState = state.set('taskList', newTaskList);
 
     return newState;
+  },
+  [INDENT_TASK]: (state, action) => {
+    let targetIndex = action.indent - 1;
+    const taskList = state.get('taskList');
+    const indentTask = taskList.get(action.indent);
+    let targetParent = taskList.get(targetIndex).parent;
+
+    // Do not indent if task is already child of preceding task.
+    if (indentTask.parent === targetIndex) {
+      return state;
+    }
+
+    // Find first preceding task that is at same level as selected task.
+    while (indentTask.parent !== targetParent) {
+      targetindex = targetParent;
+      targetParent = taskList.get(targetIndex).parent;
+    }
+    indentTask.parent = targetIndex;
+
+    return state;
   }
 };
 

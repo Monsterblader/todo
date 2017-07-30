@@ -26,7 +26,13 @@ export default class CreateTask extends Component {
           return; // Don't submit if empty
 
         onSubmitEditing({task, startDate, endDate});
-        this.setState({task: "", startDate: "", endDate: ""});
+        this.setState({
+          endDate: "",
+          index: "",
+          parent: "",
+          startDate: "",
+          task: "",
+        });
       }
   ;
 

@@ -12,7 +12,7 @@ export default class TaskList extends Component {
   }
 
   render() {
-    const {taskList} = this.props;
+    const {taskList, moveTask, indentTask} = this.props;
 
     return (
         <div className='taskList'>
@@ -28,7 +28,8 @@ export default class TaskList extends Component {
               id={value.id}
               index={key}
               value={value}
-              moveTask={this.props.moveTask}
+              moveTask={moveTask}
+              indentTask={indentTask}
               />
                               )}
           </div>
