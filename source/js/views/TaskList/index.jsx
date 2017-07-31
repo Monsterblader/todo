@@ -23,15 +23,17 @@ export default class TaskList extends Component {
           <hr />
 
           <div className='Example'>
-            {taskList.map((value, key) => <Task
+            {taskList
+                              .filter(value => value.get('parent') === "")
+                              .map((value, key) => <Task
               key={`task${key}`}
               id={value.id}
-              index={key}
+              index={value.get('index')}
               value={value}
               moveTask={moveTask}
               indentTask={indentTask}
               />
-                              )}
+            )}
           </div>
 
         </div>

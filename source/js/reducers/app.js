@@ -13,7 +13,8 @@ const initialState = Map({
 const actionsMap = {
   [ADD_TASK]: (state, action) => {
     const taskList = state.get('taskList');
-    const newState = state.set('taskList', taskList.push(action.task));
+    const task = action.task.update('index', () => taskList.size);
+    const newState = state.set('taskList', taskList.push(task));
 
     return newState;
   },
@@ -31,21 +32,23 @@ const actionsMap = {
     let targetIndex = action.indent - 1;
     const taskList = state.get('taskList');
     const indentTask = taskList.get(action.indent);
-    let targetParent = taskList.get(targetIndex).parent;
+    let targetParent = taskList.get(targetIndex).get('parent');
 
     // Do not indent if task is already child of preceding task.
-    if (indentTask.parent === targetIndex) {
+    if (indentTask.get('parent') === targetIndex) {
       return state;
     }
 
     // Find first preceding task that is at same level as selected task.
-    while (indentTask.parent !== targetParent) {
-      targetindex = targetParent;
-      targetParent = taskList.get(targetIndex).parent;
+    while (indentTask.get('parent') !== targetParent) {
+      targetIndex = targetParent;
+      targetParent = taskList.get(targetIndex).get('parent');
     }
-    indentTask.parent = targetIndex;
+    const newTask = indentTask.update('parent', () => targetIndex);
+    const newTaskList = taskList.update(action.indent, () => newTask);
+    const newState = state.set('taskList', newTaskList);
 
-    return state;
+    return newState;
   }
 };
 

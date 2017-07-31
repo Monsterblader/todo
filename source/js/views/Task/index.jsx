@@ -104,7 +104,7 @@ export default class Task extends Component {
           {index !== 0 && <div>Outdent</div>}
           {index !== 0 && <div onClick={handleIndent}>Indent</div>}
           <p>
-          {value.task} {value.startDate} {value.endDate}
+            {value.get('task')} {value.get('startDate')} {value.get('endDate')}
           </p>
 
           <hr />

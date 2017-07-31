@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+    import { Map } from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
@@ -25,7 +26,13 @@ export default class CreateTask extends Component {
         if (!task)
           return; // Don't submit if empty
 
-        onSubmitEditing({task, startDate, endDate});
+        onSubmitEditing(Map({
+        task,
+            startDate,
+            endDate,
+            parent: "",
+            index: "",
+        }));
         this.setState({
           endDate: "",
           index: "",
