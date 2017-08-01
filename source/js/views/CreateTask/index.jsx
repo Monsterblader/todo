@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-    import { Map } from 'immutable';
+import React, {Component} from "react";
+import {Map} from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
     task: "",
     startDate: "",
-    endDate: "",
+    endDate: ""
   };
 
   handleChange = e => {
@@ -13,71 +13,33 @@ export default class CreateTask extends Component {
     const name = target.name;
 
     this.setState({[name]: target.value});
-  }
-  ;
+  };
 
-      handleKeyPress = e => {
-        if (e.key !== "Enter")
-          return;
+  handleKeyPress = e => {
+    if (e.key !== "Enter")
+      return;
 
-        const {onSubmitEditing} = this.props;
-        const {task, startDate, endDate} = this.state;
+    const {onSubmitEditing} = this.props;
+    const {task, startDate, endDate} = this.state;
 
-        if (!task)
-          return; // Don't submit if empty
+    if (!task)
+      return; // Don't submit if empty
 
-        onSubmitEditing(Map({
-        task,
-            startDate,
-            endDate,
-            parent: "",
-            index: "",
-        }));
-        this.setState({
-          endDate: "",
-          index: "",
-          parent: "",
-          startDate: "",
-          task: "",
-        });
-      }
-  ;
+    onSubmitEditing(Map({task, startDate, endDate, parent: "", index: ""}));
+    this.setState({endDate: "", index: "", parent: "", startDate: "", task: ""});
+  };
 
-      render() {
+  render() {
     const {placeholder} = this.props;
     const {task, startDate, endDate} = this.state;
 
     return (
-        <div>
-          <input
-            name="task"
-            style={styles.input}
-          type={"text"}
-          value={task}
-          placeholder={placeholder}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          />
-          <input
-            name="startDate"
-            style={styles.input}
-          type={"date"}
-          value={startDate}
-          placeholder={placeholder}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          />
-        <input
-          name="endDate"
-          style={styles.input}
-          type={"date"}
-          value={endDate}
-          placeholder={placeholder}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-          />
-        </div>
-        );
+      <div>
+        <input name="task" style={styles.input} type={"text"} value={task} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+        <input name="startDate" style={styles.input} type={"date"} value={startDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+        <input name="endDate" style={styles.input} type={"date"} value={endDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+      </div>
+    );
   }
 }
 
@@ -88,4 +50,3 @@ const styles = {
     borderWidth: 0
   }
 };
-
