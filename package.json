@@ -45,6 +45,7 @@
     "prepush": "^3.1.11",
     "react-test-renderer": "^15.6.1",
     "redux-logger": "^2.7.4",
+    "regenerator-runtime": "^0.10.5",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.0",
     "svg-sprite-loader": "^2.1.0",
@@ -89,5 +90,10 @@
   "homepage": "https://github.com/Stanko/react-redux-webpack2-boilerplate#readme",
   "prepush": [
     "npm run lint-break-on-errors --silent"
-  ]
+  ],
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!test-component).+\\.js$"
+    ]
+  }
 }
