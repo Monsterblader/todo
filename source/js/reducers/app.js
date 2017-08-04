@@ -6,7 +6,6 @@ const initialState = Map({taskList: List()});
 
 const actionsMap = {
   [ADD_TASK]: (state, action) => {
-    debugger;
     const taskList = state.get('taskList');
     const task = action.task.update('index', () => taskList.size);
     const newState = state.set('taskList', taskList.push(task));
