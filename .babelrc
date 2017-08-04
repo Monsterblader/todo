@@ -2,7 +2,13 @@
   "plugins": [
     "transform-class-properties",
     "syntax-decorators",
-    "transform-decorators-legacy"
+    "transform-decorators-legacy",
+    ["module-resolver", {
+      "root": ["./source/js"],
+      "alias": {
+        "test": "./test"
+      }
+      }]
   ],
   "presets": [
     ["es2015", { "modules": false }],
