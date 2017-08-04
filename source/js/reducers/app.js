@@ -1,14 +1,8 @@
-import { Map, List } from 'immutable';
+import {Map, List} from 'immutable';
 
-import {
-ADD_TASK,
-    MOVE_TASK,
-    INDENT_TASK,
-} from 'actions/app';
+import {ADD_TASK, MOVE_TASK, INDENT_TASK} from 'actions/app';
 
-const initialState = Map({
-  taskList: List(),
-});
+const initialState = Map({taskList: List()});
 
 const actionsMap = {
   [ADD_TASK]: (state, action) => {
@@ -54,5 +48,7 @@ const actionsMap = {
 
 export default function reducer(state = initialState, action = {}) {
   const fn = actionsMap[action.type];
-  return fn ? fn(state, action) : state;
+  return fn
+    ? fn(state, action)
+    : state;
 }

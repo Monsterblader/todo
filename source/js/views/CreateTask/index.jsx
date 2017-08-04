@@ -16,7 +16,7 @@ export default class CreateTask extends Component {
   };
 
   handleKeyPress = e => {
-    if (e.key !== "Enter")
+    if (e.key !== "Enter") 
       return;
 
     const {onSubmitEditing} = this.props;

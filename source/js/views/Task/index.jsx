@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
-import { DragSource, DropTarget } from 'react-dnd';
-import { ItemTypes } from 'Constants';
+import {findDOMNode} from 'react-dom';
+import {DragSource, DropTarget} from 'react-dnd';
+import {ItemTypes} from 'Constants';
 
 const taskSource = {
   beginDrag(props) {
-    return {
-      id: props.id,
-      index: props.index,
-      value: props.value,
-    };
+    return {id: props.id, index: props.index, value: props.value};
   },
 
   endDrag(props, monitor, component) {
@@ -22,7 +18,7 @@ const taskSource = {
     const dropResult = monitor.getDropResult();
 
     // This is a good place to call some Flux action
-//    CardActions.moveCardToList(item.id, dropResult.listId);
+    //    CardActions.moveCardToList(item.id, dropResult.listId);
   }
 };
 
@@ -50,23 +46,15 @@ const taskTarget = {
 
     props.moveTask(dragIndex, hoverIndex);
     monitor.getItem().index = hoverIndex;
-  },
+  }
 };
 
 function dragCollect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  };
+  return {connectDragSource: connect.dragSource(), isDragging: monitor.isDragging()};
 }
 
 function dropCollect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    didDrop: monitor.didDrop(),
-    getDropResult: monitor.getDropResult(),
-  };
+  return {connectDropTarget: connect.dropTarget(), isOver: monitor.isOver(), didDrop: monitor.didDrop(), getDropResult: monitor.getDropResult()};
 }
 
 @DragSource(ItemTypes.TASK, taskSource, dragCollect)
@@ -76,7 +64,7 @@ export default class Task extends Component {
     value: PropTypes.object.isRequired,
     connectDragSource: PropTypes.func.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool,
+    isDragging: PropTypes.bool
   };
 
   render() {
@@ -87,27 +75,28 @@ export default class Task extends Component {
       const source = this.props.index;
 
       indentTask(source);
-    }
-    ;
+    };
 
     /* render sub-tasks */
     return connectDragSource(connectDropTarget(
-        <div
-          id={index}
-          value={value}
-        style={{
-                          opacity: isDragging ? 0.5 : 1,
-                          fontSize: 25,
-                          fontWeight: 'bold',
-                          cursor: 'move'}}
-                          className='singleTask'>
-          {index !== 0 && <div>Outdent</div>}
-          {index !== 0 && <div onClick={handleIndent}>Indent</div>}
-          <p>
-            {value.get('task')} {value.get('startDate')} {value.get('endDate')}
-          </p>
+      <div id={index} value={value} style={{
+        opacity: isDragging
+          ? 0.5
+          : 1,
+        fontSize: 25,
+        fontWeight: 'bold',
+        cursor: 'move'
+      }} className='singleTask'>
+        {index !== 0 && <div>Outdent</div>}
+        {index !== 0 && <div onClick={handleIndent}>Indent</div>}
+        <p>
+          {value.get('task')}
+          {value.get('startDate')}
+          {value.get('endDate')}
+        </p>
 
-          <hr />
-      </div>));
+        <hr/>
+      </div>
+    ));
   }
 }

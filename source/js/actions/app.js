@@ -3,24 +3,13 @@ export const MOVE_TASK = 'MOVE_TASK';
 export const INDENT_TASK = 'INDENT_TASK';
 
 export function addTask(task) {
-  return {
-    type: ADD_TASK,
-    task,
-  };
+  return {type: ADD_TASK, task};
 }
 
 export function moveTask(dragIndex, hoverIndex) {
-  return {
-    type: MOVE_TASK,
-    dragIndex,
-    hoverIndex,
-  };
+  return {type: MOVE_TASK, dragIndex, hoverIndex};
 }
 
 export function indentTask(indent, target) {
-  return {
-    type: INDENT_TASK,
-    indent,
-    target,
-  };
+  return {type: INDENT_TASK, indent, target};
 }

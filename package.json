@@ -93,8 +93,7 @@
   ],
   "jest": {
     "transformIgnorePatterns": [
-      "/node_modules/(?!test-component).+\\.js$",
-      "/node_modules/(?!jest-runtime)"
+      "/node_modules/(?!test-component).+\\.js$"
     ]
   }
 }
