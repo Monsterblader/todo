@@ -1,8 +1,8 @@
-import {Map, List} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 
 import {ADD_TASK, MOVE_TASK, INDENT_TASK} from 'actions/app';
 
-const initialState = Map({taskList: List()});
+const initialState = fromJS({taskList: []});
 
 const actionsMap = {
   [ADD_TASK]: (state, action) => {

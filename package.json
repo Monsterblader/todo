@@ -5,7 +5,7 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --watch",
     "start": "webpack-dev-server",
     "dev": "webpack-dashboard -t 'Marvin' -- webpack-dev-server",
     "build": "rm -rf ./build && NODE_ENV=\"production\" webpack",
