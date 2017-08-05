@@ -10,6 +10,6 @@ export function moveTask(dragIndex, hoverIndex) {
   return {type: MOVE_TASK, dragIndex, hoverIndex};
 }
 
-export function indentTask(indent, target) {
-  return {type: INDENT_TASK, indent, target};
+export function indentTask(indent) {
+  return {type: INDENT_TASK, indent};
 }

@@ -53,24 +53,52 @@ describe('The main reducer', () => {
   });
 
   it('should modify the list heirarchy when INDENT_TASK is passed', () => {
-    const state = fromJS({taskList: [
-      makeTask(0, "1"),
-      makeTask(1, "2"),
-      makeTask(2, "3"),
-      makeTask(3, "4"),
-      makeTask(4, "5"),
-    ]});
-
-    expect(mainReducer(state, {
+    expect(mainReducer(fromJS({taskList: [
+        makeTask(0, "1"),
+        makeTask(1, "2"),
+      ]}), {
       type: "INDENT_TASK",
       indent: 1,
-      target: 0
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
-      makeTask(2, "3"),
-      makeTask(3, "4"),
-      makeTask(4, "5"),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+    ]}), {
+      type: "INDENT_TASK",
+      indent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3")
+    ]}), {
+      type: "INDENT_TASK",
+      indent: 2,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+    ]}), {
+      type: "INDENT_TASK",
+      indent: 2,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 1),
     ]}));
   });
 });
