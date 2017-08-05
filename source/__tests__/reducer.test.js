@@ -35,21 +35,61 @@ describe('The main reducer', () => {
   });
 
   it('should reorder existing tasks when a MOVE_TASK is passed', () => {
-    const state = fromJS({taskList: [
+    expect(mainReducer(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2"),
-    ]});
-
-    const expectedState = fromJS({taskList: [
-      makeTask(1, "2"),
-      makeTask(0, "1"),
-    ]});
-
-    expect(mainReducer(state, {
+    ]}), {
       type: MOVE_TASK,
       dragIndex: 1,
       hoverIndex: 0
-    })).toEqual(expectedState);
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "2"),
+      makeTask(1, "1"),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+    ]}), {
+      type: MOVE_TASK,
+      dragIndex: 1,
+      hoverIndex: 0
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "2"),
+      makeTask(1, "1"),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+      makeTask(3, "4"),
+    ]}), {
+      type: MOVE_TASK,
+      dragIndex: 3,
+      hoverIndex: 2
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "4", 0),
+      makeTask(3, "3", 0),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+      makeTask(3, "4"),
+    ]}), {
+      type: MOVE_TASK,
+      dragIndex: 3,
+      hoverIndex: 1
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "4", 0),
+      makeTask(2, "2", 0),
+      makeTask(3, "3", 0),
+    ]}));
   });
 
   it('should modify the list heirarchy when INDENT_TASK is passed', () => {
@@ -102,7 +142,7 @@ describe('The main reducer', () => {
     ]}));
   });
 
-  it('should modify they list heirarchy when OUTDENT_TASK is passed', () => {
+  xit('should modify they list heirarchy when OUTDENT_TASK is passed', () => {
     expect(mainReducer(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2"),

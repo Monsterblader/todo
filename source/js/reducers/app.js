@@ -14,12 +14,28 @@ const actionsMap = {
   },
   [MOVE_TASK]: (state, action) => {
     const taskList = state.get('taskList');
-    const dragTask = taskList.get(action.dragIndex);
 
-    const shortList = taskList.delete(action.dragIndex);
-    const newTaskList = shortList.insert(action.hoverIndex, dragTask);
+    // Recalculate indent level in heirarchy.
+    const setTaskParent = () => {
+      if (action.hoverIndex === 0) {
+        return undefined;
+      }
+
+      const taskAbove = taskList.get(action.hoverIndex - 1),
+        taskBelow = taskList.get(action.hoverIndex);
+
+      const parAbove = taskAbove ? taskAbove.get('parent') : null,
+        parBelow = taskBelow ? taskBelow.get('parent') : null;
+
+      return parBelow === action.hoverIndex - 1 ? parBelow : parAbove;
+    };
+
+    const dragTask = taskList.get(action.dragIndex).update('parent', setTaskParent);
+
+    const newTaskList = taskList.delete(action.dragIndex)
+      .insert(action.hoverIndex, dragTask)
+      .map((value, key) => value.update('index', () => key));
     const newState = state.set('taskList', newTaskList);
-
     return newState;
   },
   [INDENT_TASK]: (state, action) => {
