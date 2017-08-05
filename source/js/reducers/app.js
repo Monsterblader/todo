@@ -1,6 +1,6 @@
 import {Map, List, fromJS} from 'immutable';
 
-import {ADD_TASK, MOVE_TASK, INDENT_TASK} from 'actions/app';
+import {ADD_TASK, MOVE_TASK, INDENT_TASK, OUTDENT_TASK} from 'actions/app';
 
 const initialState = fromJS({taskList: []});
 
@@ -43,7 +43,11 @@ const actionsMap = {
     const newState = state.set('taskList', newTaskList);
 
     return newState;
-  }
+  },
+  [OUTDENT_TASK]: (state, action) => {
+    const newState = state;
+    return newState;
+  },
 };
 
 export default function reducer(state = initialState, action = {}) {

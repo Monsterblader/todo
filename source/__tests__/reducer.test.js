@@ -1,5 +1,5 @@
 import { Map, List, fromJS } from 'immutable';
-import { ADD_TASK, MOVE_TASK, INDENT_TASK } from '../js/actions/app';
+import { ADD_TASK, MOVE_TASK, INDENT_TASK, OUTDENT_TASK } from '../js/actions/app';
 import mainReducer from '../js/reducers/app';
 
 const makeTask = (i, t, p, s, e) => {
@@ -57,7 +57,7 @@ describe('The main reducer', () => {
         makeTask(0, "1"),
         makeTask(1, "2"),
       ]}), {
-      type: "INDENT_TASK",
+      type: INDENT_TASK,
       indent: 1,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
@@ -68,7 +68,7 @@ describe('The main reducer', () => {
       makeTask(0, "1"),
       makeTask(1, "2", 0),
     ]}), {
-      type: "INDENT_TASK",
+      type: INDENT_TASK,
       indent: 1,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
@@ -80,7 +80,7 @@ describe('The main reducer', () => {
       makeTask(1, "2", 0),
       makeTask(2, "3")
     ]}), {
-      type: "INDENT_TASK",
+      type: INDENT_TASK,
       indent: 2,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
@@ -93,12 +93,76 @@ describe('The main reducer', () => {
       makeTask(1, "2", 0),
       makeTask(2, "3", 0),
     ]}), {
-      type: "INDENT_TASK",
+      type: INDENT_TASK,
       indent: 2,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
       makeTask(2, "3", 1),
     ]}));
+  });
+
+  it('should modify they list heirarchy when OUTDENT_TASK is passed', () => {
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2"),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2"),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2"),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 1),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2"),
+      makeTask(2, "3", 1),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 1),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+    ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 1,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3"),
+    ]}));
+
   });
 });
