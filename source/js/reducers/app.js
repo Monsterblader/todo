@@ -18,14 +18,14 @@ const actionsMap = {
     // Recalculate indent level in heirarchy.
     const setTaskParent = () => {
       if (action.hoverIndex === 0) {
-        return null;
+        return "";
       }
 
       const taskAbove = taskList.get(action.hoverIndex - 1),
         taskBelow = taskList.get(action.hoverIndex);
 
-      const parAbove = taskAbove ? taskAbove.get('parent') : null,
-        parBelow = taskBelow ? taskBelow.get('parent') : null;
+      const parAbove = taskAbove ? taskAbove.get('parent') : "",
+        parBelow = taskBelow ? taskBelow.get('parent') : "";
 
       return parBelow === action.hoverIndex - 1 ? parBelow : parAbove;
     };
@@ -65,7 +65,7 @@ const actionsMap = {
     const task = taskList.get(action.outdent);
     const taskParent = task.get('parent');
 
-    if (task.get('parent') === null) {
+    if (task.get('parent') === "") {
       return state;
     }
 

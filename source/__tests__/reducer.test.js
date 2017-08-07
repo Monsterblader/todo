@@ -2,7 +2,7 @@ import { Map, List, fromJS } from 'immutable';
 import { ADD_TASK, MOVE_TASK, INDENT_TASK, OUTDENT_TASK } from '../js/actions/app';
 import mainReducer from '../js/reducers/app';
 
-const makeTask = (i, t, p = null, s = null, e = null) => {
+const makeTask = (i, t, p = "", s = "", e = "") => {
   return Map({
     endDate: e,
     index: i,

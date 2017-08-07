@@ -3,11 +3,11 @@ import {Map} from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
-    endDate: null,
-    index: null,
-    parent: null,
-    startDate: null,
-    task: null,
+    endDate: "",
+    index: "",
+    parent: "",
+    startDate: "",
+    task: "",
   };
 
   handleChange = e => {
@@ -27,8 +27,8 @@ export default class CreateTask extends Component {
     if (!task)
       return; // Don't submit if empty
 
-    onSubmitEditing(Map({task, startDate, endDate, parent: null, index: null}));
-    this.setState({endDate: null, index: null, parent: null, startDate: null, task: null});
+    onSubmitEditing(Map({task, startDate, endDate, parent: "", index: ""}));
+    this.setState({endDate: "", index: "", parent: "", startDate: "", task: ""});
   };
 
   render() {
