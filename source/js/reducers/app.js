@@ -18,7 +18,7 @@ const actionsMap = {
     // Recalculate indent level in heirarchy.
     const setTaskParent = () => {
       if (action.hoverIndex === 0) {
-        return undefined;
+        return null;
       }
 
       const taskAbove = taskList.get(action.hoverIndex - 1),
@@ -63,19 +63,26 @@ const actionsMap = {
   [OUTDENT_TASK]: (state, action) => {
     const taskList = state.get('taskList');
     const task = taskList.get(action.outdent);
+    const taskParent = task.get('parent');
 
     if (task.get('parent') === null) {
       return state;
     }
 
+    let checkIndex = action.outdent;
+    const listLength = taskList.size;
+    while (checkIndex < listLength && taskParent === taskList.get(checkIndex).get('parent')) {
+      checkIndex += 1;
+    }
+    const newTask = task.update('parent', (parent) => {
+      const parentTask = taskList.get(parent);
+      return parentTask.get('parent');
+    })
+    const newTaskList = taskList.delete(action.outdent)
+      .insert(checkIndex - 1, newTask)
+      .map((value, key) => value.update('index', () => key));
 
-    // if top level, do nothing
-    // if first child, outdent
-    // if last child, outdent to parent
-    // if middle, outdent to parent, move to bottom
-
-    const newState = state;
-    return newState;
+    return state.update('taskList', () => newTaskList);
   },
 };
 

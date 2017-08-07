@@ -2,7 +2,7 @@ import { Map, List, fromJS } from 'immutable';
 import { ADD_TASK, MOVE_TASK, INDENT_TASK, OUTDENT_TASK } from '../js/actions/app';
 import mainReducer from '../js/reducers/app';
 
-const makeTask = (i, t, p, s, e) => {
+const makeTask = (i, t, p = null, s = null, e = null) => {
   return Map({
     endDate: e,
     index: i,
@@ -165,7 +165,7 @@ describe('The main reducer', () => {
       makeTask(1, "2"),
     ]}));
 
-    /*expect(mainReducer(fromJS({taskList: [
+    expect(mainReducer(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
       makeTask(2, "3", 1),
@@ -217,7 +217,7 @@ describe('The main reducer', () => {
       makeTask(1, "2", 0),
       makeTask(2, "4", 0),
       makeTask(3, "3"),
-    ]}));*/
+    ]}));
 
   });
 });
