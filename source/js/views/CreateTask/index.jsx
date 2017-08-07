@@ -3,9 +3,11 @@ import {Map} from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
-    task: "",
-    startDate: "",
-    endDate: ""
+    endDate: null,
+    index: null,
+    parent: null,
+    startDate: null,
+    task: null,
   };
 
   handleChange = e => {
@@ -16,7 +18,7 @@ export default class CreateTask extends Component {
   };
 
   handleKeyPress = e => {
-    if (e.key !== "Enter") 
+    if (e.key !== "Enter")
       return;
 
     const {onSubmitEditing} = this.props;
@@ -25,8 +27,8 @@ export default class CreateTask extends Component {
     if (!task)
       return; // Don't submit if empty
 
-    onSubmitEditing(Map({task, startDate, endDate, parent: "", index: ""}));
-    this.setState({endDate: "", index: "", parent: "", startDate: "", task: ""});
+    onSubmitEditing(Map({task, startDate, endDate, parent: null, index: null}));
+    this.setState({endDate: null, index: null, parent: null, startDate: null, task: null});
   };
 
   render() {

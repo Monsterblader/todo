@@ -61,6 +61,19 @@ const actionsMap = {
     return newState;
   },
   [OUTDENT_TASK]: (state, action) => {
+    const taskList = state.get('taskList');
+    const task = taskList.get(action.outdent);
+
+    if (task.get('parent') === null) {
+      return state;
+    }
+
+
+    // if top level, do nothing
+    // if first child, outdent
+    // if last child, outdent to parent
+    // if middle, outdent to parent, move to bottom
+
     const newState = state;
     return newState;
   },

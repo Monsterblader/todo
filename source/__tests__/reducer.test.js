@@ -142,7 +142,7 @@ describe('The main reducer', () => {
     ]}));
   });
 
-  xit('should modify they list heirarchy when OUTDENT_TASK is passed', () => {
+  it('should modify they list heirarchy when OUTDENT_TASK is passed', () => {
     expect(mainReducer(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2"),
@@ -165,7 +165,7 @@ describe('The main reducer', () => {
       makeTask(1, "2"),
     ]}));
 
-    expect(mainReducer(fromJS({taskList: [
+    /*expect(mainReducer(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
       makeTask(2, "3", 1),
@@ -184,7 +184,7 @@ describe('The main reducer', () => {
       makeTask(2, "3", 1),
     ]}), {
       type: OUTDENT_TASK,
-      outdent: 1,
+      outdent: 2,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
@@ -197,12 +197,27 @@ describe('The main reducer', () => {
       makeTask(2, "3", 0),
     ]}), {
       type: OUTDENT_TASK,
-      outdent: 1,
+      outdent: 2,
     })).toEqual(fromJS({taskList: [
       makeTask(0, "1"),
       makeTask(1, "2", 0),
       makeTask(2, "3"),
     ]}));
+
+    expect(mainReducer(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "3", 0),
+      makeTask(3, "4", 0),
+    ]}), {
+      type: OUTDENT_TASK,
+      outdent: 2,
+    })).toEqual(fromJS({taskList: [
+      makeTask(0, "1"),
+      makeTask(1, "2", 0),
+      makeTask(2, "4", 0),
+      makeTask(3, "3"),
+    ]}));*/
 
   });
 });
