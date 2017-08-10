@@ -6,11 +6,10 @@ const initialState = fromJS({taskList: []});
 
 const actionsMap = {
   [ADD_TASK]: (state, action) => {
-    const taskList = state.get('taskList');
-    const task = action.task.update('index', () => taskList.size);
-    const newState = state.set('taskList', taskList.push(task));
+    const taskListSize = state.get('taskList').size;
+    const task = action.task.set('index', taskListSize);
 
-    return newState;
+    return state.setIn(['taskList', taskListSize], task);
   },
   [MOVE_TASK]: (state, action) => {
     const taskList = state.get('taskList');
@@ -21,11 +20,8 @@ const actionsMap = {
         return "";
       }
 
-      const taskAbove = taskList.get(action.hoverIndex - 1),
-        taskBelow = taskList.get(action.hoverIndex);
-
-      const parAbove = taskAbove ? taskAbove.get('parent') : "",
-        parBelow = taskBelow ? taskBelow.get('parent') : "";
+      const parAbove = taskList.getIn([action.hoverIndex - 1, 'parent'], ''),
+        parBelow = taskList.getIn([action.hoverIndex, 'parent'], '');
 
       return parBelow === action.hoverIndex - 1 ? parBelow : parAbove;
     };
@@ -34,15 +30,14 @@ const actionsMap = {
 
     const newTaskList = taskList.delete(action.dragIndex)
       .insert(action.hoverIndex, dragTask)
-      .map((value, key) => value.update('index', () => key));
-    const newState = state.set('taskList', newTaskList);
-    return newState;
+      .map((value, key) => value.set('index', key));
+
+    return state.set('taskList', newTaskList);
   },
   [INDENT_TASK]: (state, action) => {
     let targetIndex = action.indent - 1;
-    const taskList = state.get('taskList');
-    const indentTask = taskList.get(action.indent);
-    let targetParent = taskList.get(targetIndex).get('parent');
+    const indentTask = state.getIn(['taskList', action.indent], '');
+    let targetParent = state.getIn(['taskList', targetIndex, 'parent'], '');
 
     // Do not indent if task is already child of preceding task.
     if (indentTask.get('parent') === targetIndex) {
@@ -52,37 +47,32 @@ const actionsMap = {
     // Find first preceding task that is at same level as selected task.
     while (indentTask.get('parent') !== targetParent) {
       targetIndex = targetParent;
-      targetParent = taskList.get(targetIndex).get('parent');
+      targetParent = state.getIn([targetIndex, 'parent'], '');
     }
-    const newTask = indentTask.update('parent', () => targetIndex);
-    const newTaskList = taskList.update(action.indent, () => newTask);
-    const newState = state.set('taskList', newTaskList);
 
-    return newState;
+    return state.setIn(['taskList', action.indent, 'parent'], targetIndex);
   },
   [OUTDENT_TASK]: (state, action) => {
+    const outdent = action.outdent;
     const taskList = state.get('taskList');
-    const task = taskList.get(action.outdent);
+    const task = taskList.get(outdent);
     const taskParent = task.get('parent');
 
-    if (task.get('parent') === "") {
+    if (taskParent === '') {
       return state;
     }
 
-    let checkIndex = action.outdent;
+    let checkIndex = outdent;
     const listLength = taskList.size;
-    while (checkIndex < listLength && taskParent === taskList.get(checkIndex).get('parent')) {
+    while (checkIndex < listLength && taskParent === taskList.getIn([checkIndex, 'parent'], '')) {
       checkIndex += 1;
     }
-    const newTask = task.update('parent', (parent) => {
-      const parentTask = taskList.get(parent);
-      return parentTask.get('parent');
-    })
-    const newTaskList = taskList.delete(action.outdent)
+    const newTask = task.update('parent', parent => taskList.getIn([parent, 'parent'], ''));
+    const newTaskList = taskList.delete(outdent)
       .insert(checkIndex - 1, newTask)
-      .map((value, key) => value.update('index', () => key));
+      .map((value, key) => value.set('index', key));
 
-    return state.update('taskList', () => newTaskList);
+    return state.set('taskList', newTaskList);
   },
 };
 
