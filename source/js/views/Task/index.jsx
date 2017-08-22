@@ -57,9 +57,9 @@ function dropCollect(connect, monitor) {
   return {connectDropTarget: connect.dropTarget(), isOver: monitor.isOver(), didDrop: monitor.didDrop(), getDropResult: monitor.getDropResult()};
 }
 
-@DragSource(ItemTypes.TASK, taskSource, dragCollect)
-@DropTarget(ItemTypes.TASK, taskTarget, dropCollect)
-export default class Task extends Component {
+// @DragSource(ItemTypes.TASK, taskSource, dragCollect)
+// @DropTarget(ItemTypes.TASK, taskTarget, dropCollect)
+class Task extends Component {
   static propTypes = {
     value: PropTypes.object.isRequired,
     connectDragSource: PropTypes.func.isRequired,
@@ -100,3 +100,5 @@ export default class Task extends Component {
     ));
   }
 }
+
+export default DragSource(ItemTypes.TASK, taskSource, dragCollect)(DropTarget(ItemTypes.TASK, taskTarget, dropCollect)(Task));
