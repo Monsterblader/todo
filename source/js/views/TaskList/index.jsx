@@ -10,7 +10,12 @@ export default class TaskList extends Component {
   }
 
   render() {
-    const {taskList, moveTask, indentTask} = this.props;
+    const {
+      taskList,
+      moveTask,
+      indentTask,
+      outdentTask
+    } = this.props;
 
     return (
       <div className='taskList'>
@@ -21,7 +26,17 @@ export default class TaskList extends Component {
         <hr/>
 
         <div className='Example'>
-          {taskList.filter(value => value.get('parent') === "").map((value, key) => <Task key={`task${key}`} id={value.id} index={value.get('index')} value={value} moveTask={moveTask} indentTask={indentTask}/>)}
+          {taskList.filter(value => value.get('parent') === "").map((value, key) => (
+            <Task
+              key={`task${key}`}
+              id={value.id}
+              index={value.get('index')}
+              value={value}
+              moveTask={moveTask}
+              indentTask={indentTask}
+              outdentTask={outdentTask}
+            />
+          ))}
         </div>
 
       </div>

@@ -9,10 +9,16 @@ describe('Item', () => {
     indentSpy = jest.fn(),
     outdentSpy = jest.fn(),
     mockValue = fromJS({id: 'a1', index: '0', task: 'task1', startDate: 'startDate1', endDate: 'endDate1'}),
-    task = shallow(<Task index={mockValue.get('index')} value={mockValue}
-      connectDragSource={passThroughFn}
-      connectDropTarget={passThroughFn}
-      indentTask={indentSpy} />);
+    task = shallow(
+      <Task
+        index={mockValue.get('index')}
+        value={mockValue}
+        connectDragSource={passThroughFn}
+        connectDropTarget={passThroughFn}
+        indentTask={indentSpy}
+        outdentTask={outdentSpy}
+      />
+    );
 
   it('should render', () => {
     const task = renderer.create(
