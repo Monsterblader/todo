@@ -1,9 +1,33 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import Task from '../js/views/task';
+import { Task } from '../js/views/task';
+import { fromJS } from 'immutable';
 
 describe('Item', () => {
-  it('should work', () => {
-    expect(true).toBe(true);
+  const passThroughFn = arg => arg,
+    indentSpy = jest.fn(),
+    outdentSpy = jest.fn(),
+    mockValue = fromJS({id: 'a1', index: '0', task: 'task1', startDate: 'startDate1', endDate: 'endDate1'}),
+    task = shallow(<Task index={mockValue.get('index')} value={mockValue}
+      connectDragSource={passThroughFn}
+      connectDropTarget={passThroughFn}
+      indentTask={indentSpy} />);
+
+  it('should render with "task," "startDate," and "endDate"', () => {
+    expect(task.find('#0')).toHaveLength(1);
+    expect(task.text().search('task1')).toBeGreaterThan(-1);
+    expect(task.text().search('startDate1')).toBeGreaterThan(-1);
+    expect(task.text().search('endDate1')).toBeGreaterThan(-1);
+  });
+
+  it('should be able to indent', () => {
+    const indentTask = task.find('.indentTask');
+    expect(indentTask).toHaveLength(1);
+    indentTask.simulate('click');
+    expect(indentSpy.mock.calls[0]).toEqual(['0']);
+  });
+
+  it('should be able to outdent', () => {
+    expect(true).toBe(false);
   });
 });
