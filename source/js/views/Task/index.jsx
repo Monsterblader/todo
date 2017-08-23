@@ -57,9 +57,9 @@ function dropCollect(connect, monitor) {
   return {connectDropTarget: connect.dropTarget(), isOver: monitor.isOver(), didDrop: monitor.didDrop(), getDropResult: monitor.getDropResult()};
 }
 
-@DragSource(ItemTypes.TASK, taskSource, dragCollect)
-@DropTarget(ItemTypes.TASK, taskTarget, dropCollect)
-export default class Task extends Component {
+// @DragSource(ItemTypes.TASK, taskSource, dragCollect)
+// @DropTarget(ItemTypes.TASK, taskTarget, dropCollect)
+export class Task extends Component {
   static propTypes = {
     value: PropTypes.object.isRequired,
     connectDragSource: PropTypes.func.isRequired,
@@ -79,7 +79,7 @@ export default class Task extends Component {
 
     /* render sub-tasks */
     return connectDragSource(connectDropTarget(
-      <div id={index} value={value} style={{
+      <div id={index} style={{
         opacity: isDragging
           ? 0.5
           : 1,
@@ -87,8 +87,8 @@ export default class Task extends Component {
         fontWeight: 'bold',
         cursor: 'move'
       }} className='singleTask'>
-        {index !== 0 && <div>Outdent</div>}
-        {index !== 0 && <div onClick={handleIndent}>Indent</div>}
+        {index !== 0 && <div className='outdentTask'>Outdent</div>}
+        {index !== 0 && <div className='indentTask' onClick={handleIndent}>Indent</div>}
         <p>
           {value.get('task')}
           {value.get('startDate')}
@@ -100,3 +100,5 @@ export default class Task extends Component {
     ));
   }
 }
+
+export default DragSource(ItemTypes.TASK, taskSource, dragCollect)(DropTarget(ItemTypes.TASK, taskTarget, dropCollect)(Task));
