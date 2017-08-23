@@ -3,9 +3,11 @@ import {Map} from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
-    task: "",
+    endDate: "",
+    index: "",
+    parent: "",
     startDate: "",
-    endDate: ""
+    task: "",
   };
 
   handleChange = e => {

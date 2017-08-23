@@ -7,14 +7,18 @@ function testAsync() {
       let seconds = date.getSeconds();
       let minutes = date.getMinutes();
 
-      seconds = seconds < 10 ? `0${ seconds }` : seconds;
-      minutes = minutes < 10 ? `0${ minutes }` : minutes;
+      seconds = seconds < 10
+        ? `0${seconds}`
+        : seconds;
+      minutes = minutes < 10
+        ? `0${minutes}`
+        : minutes;
 
-      resolve(`Current time: ${ date.getHours() }:${ minutes }:${ seconds }`);
+      resolve(`Current time: ${date.getHours()}:${minutes}:${seconds}`);
     }, (Math.random() * 1000) + 1000); // 1-2 seconds delay
   });
 }
 
 export default {
-  testAsync,
+  testAsync
 };
