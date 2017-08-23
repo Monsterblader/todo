@@ -68,14 +68,29 @@ export class Task extends Component {
   };
 
   render() {
-    const {connectDragSource, connectDropTarget, isDragging, indentTask} = this.props;
-    const {index, value} = this.props;
+    const {
+      connectDragSource,
+      connectDropTarget,
+      isDragging,
+      indentTask,
+      outdentTask
+    } = this.props;
+    const {
+      index,
+      value
+    } = this.props;
 
     const handleIndent = () => {
       const source = this.props.index;
 
       indentTask(source);
     };
+
+    const handleOutdent = () => {
+      const source = this.props.index;
+
+      outdentTask(source);
+    }
 
     /* render sub-tasks */
     return connectDragSource(connectDropTarget(
@@ -87,7 +102,7 @@ export class Task extends Component {
         fontWeight: 'bold',
         cursor: 'move'
       }} className='singleTask'>
-        {index !== 0 && <div className='outdentTask'>Outdent</div>}
+        {index !== 0 && <div className='outdentTask' onClick={handleOutdent}>Outdent</div>}
         {index !== 0 && <div className='indentTask' onClick={handleIndent}>Indent</div>}
         <div>
           <span>{value.get('task')}</span>

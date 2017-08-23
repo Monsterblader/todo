@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 
-import {addTask, moveTask, indentTask} from 'actions/app';
+import {
+  addTask,
+  moveTask,
+  indentTask,
+  outdentTask
+} from 'actions/app';
 
 import CreateTask from 'views/CreateTask';
 import TaskList from 'views/TaskList';
@@ -15,28 +20,41 @@ export default class App extends Component {
   };
 
   onAddTask = task => {
-    const {dispatch} = this.props.store;
+    const { dispatch } = this.props.store;
 
-    dispatch(addTask(task));
+    this.dispatch(addTask(task));
   };
 
   onMoveTask = (dragTask, hoverTask) => {
-    const {dispatch} = this.props.store;
+    const { dispatch } = this.props.store;
 
-    dispatch(moveTask(dragTask, hoverTask));
+    this.dispatch(moveTask(dragTask, hoverTask));
   };
 
   onIndentTask = (indent, target) => {
-    const {dispatch} = this.props.store;
+    const { dispatch } = this.props.store;
 
-    dispatch(indentTask(indent, target));
+    this.dispatch(indentTask(indent, target));
+  };
+
+  onOutdentTask = (outdent, target) => {
+    const { dispatch } = this.props.store;
+
+    this.dispatch(outdentTask(outdent, target));
   };
 
   render() {
     return (
       <div className='App'>
-        <CreateTask onSubmitEditing={this.onAddTask} placeholder="Task description"/>
-        <TaskList moveTask={this.onMoveTask} indentTask={this.onIndentTask}/>
+        <CreateTask
+          onSubmitEditing={this.onAddTask}
+          placeholder="Task description"
+        />
+        <TaskList
+          moveTask={this.onMoveTask}
+          indentTask={this.onIndentTask}
+          outdentTask={this.onOutdentTask}
+        />
       </div>
     );
   }
