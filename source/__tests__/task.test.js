@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { Task } from '../js/views/task';
 import { fromJS } from 'immutable';
+import renderer from 'react-test-renderer';
 
 describe('Item', () => {
   const passThroughFn = arg => arg,
@@ -12,6 +13,16 @@ describe('Item', () => {
       connectDragSource={passThroughFn}
       connectDropTarget={passThroughFn}
       indentTask={indentSpy} />);
+
+  it('should render', () => {
+    const task = renderer.create(
+    <Task index={mockValue.get('index')} value={mockValue}
+      connectDragSource={passThroughFn}
+      connectDropTarget={passThroughFn}
+      indentTask={indentSpy} />
+    );
+    expect(task).toMatchSnapshot();
+  });
 
   it('should render with "task," "startDate," and "endDate"', () => {
     expect(task.find('#0')).toHaveLength(1);
@@ -28,6 +39,9 @@ describe('Item', () => {
   });
 
   it('should be able to outdent', () => {
-    expect(true).toBe(false);
+    const outdentTask = task.find('.outdentTask');
+    expect(outdentTask).toHaveLength(1);
+    outdentTask.simulate('click');
+    expect(outdentSpy.mock.calls[0]).toEqual(['0']);
   });
 });

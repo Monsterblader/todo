@@ -89,11 +89,11 @@ export class Task extends Component {
       }} className='singleTask'>
         {index !== 0 && <div className='outdentTask'>Outdent</div>}
         {index !== 0 && <div className='indentTask' onClick={handleIndent}>Indent</div>}
-        <p>
-          {value.get('task')}
-          {value.get('startDate')}
-          {value.get('endDate')}
-        </p>
+        <div>
+          <span>{value.get('task')}</span>
+          <span>{value.get('startDate')}</span>
+          <span>{value.get('endDate')}</span>
+        </div>
 
         <hr/>
       </div>
