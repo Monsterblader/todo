@@ -22,25 +22,25 @@ export default class App extends Component {
   onAddTask = task => {
     const { dispatch } = this.props.store;
 
-    this.dispatch(addTask(task));
+    dispatch(addTask(task));
   };
 
   onMoveTask = (dragTask, hoverTask) => {
     const { dispatch } = this.props.store;
 
-    this.dispatch(moveTask(dragTask, hoverTask));
+    dispatch(moveTask(dragTask, hoverTask));
   };
 
-  onIndentTask = (indent, target) => {
+  onIndentTask = indent => {
     const { dispatch } = this.props.store;
 
-    this.dispatch(indentTask(indent, target));
+    dispatch(indentTask(indent));
   };
 
-  onOutdentTask = (outdent, target) => {
+  onOutdentTask = outdent => {
     const { dispatch } = this.props.store;
 
-    this.dispatch(outdentTask(outdent, target));
+    dispatch(outdentTask(outdent));
   };
 
   render() {
