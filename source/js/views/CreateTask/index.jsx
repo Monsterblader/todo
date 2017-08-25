@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Map} from 'immutable';
+import React, { Component } from "react";
+import { Map } from 'immutable';
 
 export default class CreateTask extends Component {
   state = {
@@ -14,32 +14,33 @@ export default class CreateTask extends Component {
     const target = e.target;
     const name = target.name;
 
-    this.setState({[name]: target.value});
+    this.setState({ [name]: target.value });
+    return 'quack';
   };
 
   handleKeyPress = e => {
     if (e.key !== "Enter")
       return;
 
-    const {onSubmitEditing} = this.props;
-    const {task, startDate, endDate} = this.state;
+    const { onSubmitEditing } = this.props;
+    const { task, startDate, endDate } = this.state;
 
     if (!task)
       return; // Don't submit if empty
 
-    onSubmitEditing(Map({task, startDate, endDate, parent: "", index: ""}));
-    this.setState({endDate: "", index: "", parent: "", startDate: "", task: ""});
+    onSubmitEditing(Map({ task, startDate, endDate, parent: "", index: "" }));
+    this.setState({ endDate: "", index: "", parent: "", startDate: "", task: "" });
   };
 
   render() {
-    const {placeholder} = this.props;
-    const {task, startDate, endDate} = this.state;
+    const { placeholder } = this.props;
+    const { task, startDate, endDate } = this.state;
 
     return (
       <div>
-        <input name="task" style={styles.input} type={"text"} value={task} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
-        <input name="startDate" style={styles.input} type={"date"} value={startDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
-        <input name="endDate" style={styles.input} type={"date"} value={endDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+        <input name="task" className="enterTask" style={styles.input} type={"text"} value={task} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+        <input name="startDate" className="enterStartDate" style={styles.input} type={"date"} value={startDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+        <input name="endDate" className="enterEndDate" style={styles.input} type={"date"} value={endDate} placeholder={placeholder} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
       </div>
     );
   }

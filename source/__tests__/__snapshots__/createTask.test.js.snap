@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateTask should render 1`] = `
+<div>
+  <input
+    className="enterTask"
+    name="task"
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="test"
+    style={
+      Object {
+        "borderWidth": 0,
+        "fontSize": "100%",
+        "padding": 15,
+      }
+    }
+    type="text"
+    value=""
+  />
+  <input
+    className="enterStartDate"
+    name="startDate"
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="test"
+    style={
+      Object {
+        "borderWidth": 0,
+        "fontSize": "100%",
+        "padding": 15,
+      }
+    }
+    type="date"
+    value=""
+  />
+  <input
+    className="enterEndDate"
+    name="endDate"
+    onChange={[Function]}
+    onKeyPress={[Function]}
+    placeholder="test"
+    style={
+      Object {
+        "borderWidth": 0,
+        "fontSize": "100%",
+        "padding": 15,
+      }
+    }
+    type="date"
+    value=""
+  />
+</div>
+`;
