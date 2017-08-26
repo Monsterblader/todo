@@ -15,7 +15,6 @@ export default class CreateTask extends Component {
     const name = target.name;
 
     this.setState({ [name]: target.value });
-    return 'quack';
   };
 
   handleKeyPress = e => {

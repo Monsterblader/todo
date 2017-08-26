@@ -6,37 +6,90 @@ import renderer from 'react-test-renderer';
 
 describe('CreateTask', () => {
   const passThroughFn = arg => arg,
-    onSubmitEditingSpy = jest.fn(),
-    mockValue = fromJS({id: 'a1', index: '0', task: 'task1', startDate: 'startDate1', endDate: 'endDate1'}),
-    createTask = shallow(
-      <CreateTask
-        onSubmitEditing={onSubmitEditingSpy}
-        placeholder="test"
-      />
-    );
+    mockValue = fromJS({id: 'a1', index: '0', task: 'task1', startDate: 'startDate1', endDate: 'endDate1'});
 
   it('should render', () => {
-    const createTask = renderer.create(
-      <CreateTask
-        onSubmitEditing={onSubmitEditingSpy}
-        placeholder="test"
-      />
-    );
+    const onSubmitEditingSpy = jest.fn(),
+      createTask = renderer.create(
+        <CreateTask
+          onSubmitEditing={onSubmitEditingSpy}
+          placeholder="test"
+        />
+      );
+
     expect(createTask).toMatchSnapshot();
   });
 
   it('should render with "task," "startDate," and "endDate"', () => {
+    const createTask = shallow(
+        <CreateTask
+          onSubmitEditing=''
+          placeholder="test"
+        />
+      );
+
     expect(createTask.find('input')).toHaveLength(3);
     expect(createTask.find('.enterTask')).toHaveLength(1);
     expect(createTask.find('.enterStartDate')).toHaveLength(1);
     expect(createTask.find('.enterEndDate')).toHaveLength(1);
   });
 
-  it('should handle key presses and field changes', () => {
-    const testEvent = {target: {name: 'task', value: 'a'}};
-    createTask.instance().handleChange(testEvent);
+  it('should field changes', () => {
+    const onSubmitEditingSpy = jest.fn(),
+      testEvent = {target: {name: 'task', value: 'a'}},
+      createTask = shallow(
+        <CreateTask
+          onSubmitEditing={onSubmitEditingSpy}
+          placeholder="test"
+        />
+      );
+
+    createTask.find('.enterTask').simulate('change', testEvent);
     expect(createTask.instance().state.task).toEqual('a');
-    // const changedTask = createTask.find('.enterTask').simulate('keypress', {key: 128});
-    // expect(changedTask.find('.enterTask').html()).toEqual("purple");
+    testEvent.target.value = 'b';
+    createTask.instance().handleChange(testEvent);
+    expect(createTask.instance().state.task).toEqual('b');
+  });
+
+  it('should handle key presses', () => {
+    const onSubmitEditingSpy = jest.fn(),
+      testEvent = {target: {name: 'task', value: 'a'}},
+      createTask = shallow(
+        <CreateTask
+          onSubmitEditing={onSubmitEditingSpy}
+          placeholder="test"
+        />
+      );
+
+    createTask.find('.enterTask').simulate('keypress', {key: 'alt'});
+    expect(onSubmitEditingSpy).not.toBeCalled();
+    createTask.find('.enterTask').simulate('keypress', {key: 'Enter'});
+    expect(onSubmitEditingSpy).not.toBeCalled();
+
+    createTask.find('.enterTask').simulate('change', testEvent);
+    createTask.find('.enterTask').simulate('keypress', {key: 'Enter'});
+    expect(onSubmitEditingSpy).lastCalledWith(fromJS({task: 'a', startDate: '', endDate: '', parent: '', index: ''}));
+  });
+
+  it('should handle key presses', () => {
+    const onSubmitEditingSpy = jest.fn(),
+      testEvent = { target: { name: 'task', value: 'a' }},
+      createTask = shallow(
+        <CreateTask
+          onSubmitEditing={onSubmitEditingSpy}
+          placeholder="test"
+        />
+      );
+
+    createTask.instance().handleKeyPress({ key: 'Alt' });
+    expect(onSubmitEditingSpy).not.toBeCalled();
+
+    createTask.instance().handleKeyPress({ key: 'Enter' });
+    expect(onSubmitEditingSpy).not.toBeCalled();
+
+    createTask.find('.enterTask').simulate('change', testEvent);
+    createTask.find('.enterTask').simulate('keypress', { key: 'Enter' });
+    expect(onSubmitEditingSpy).lastCalledWith(fromJS({ task: 'a', startDate: '', endDate: '', parent: '', index: '' }));
+    expect(createTask.instance().state).toEqual({ endDate: '', index: '', parent: '', startDate: '', task: '' });
   });
 });
