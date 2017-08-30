@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskList should render 1`] = `
+<div
+  className="taskList"
+>
+  <p>
+    Task list
+  </p>
+  <hr />
+  <div
+    className="Example"
+  />
+</div>
+`;

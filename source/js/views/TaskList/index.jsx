@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Task from 'views/Task';
 
-@connect(state => ({taskList: state.app.get('taskList')}))
-export default class TaskList extends Component {
+export class TaskList extends Component {
   static propTypes = {
     taskList: PropTypes.object
   }
@@ -42,4 +41,6 @@ export default class TaskList extends Component {
       </div>
     );
   }
-}
+};
+
+export default connect(state => { taskList: state.app.get('taskList') })(TaskList);
