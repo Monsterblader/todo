@@ -1,26 +1,33 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
 import { TaskList } from '../js/views/TaskList';
+import TestBackend from 'react-dnd-test-backend';
+import { DragDropContext } from 'react-dnd';
 import { fromJS } from 'immutable';
 import renderer from 'react-test-renderer';
+
+const mockMoveTask = jest.fn(),
+  mockIndentTask = jest.fn(),
+  mockOutdentTask = jest.fn(),
+  TaskListContext = DragDropContext(TestBackend)(TaskList);
 
 describe('TaskList', () => {
   const mockTaskList = fromJS([
     {
-      id: 'a1',
       index: '0',
+      parent: '',
       task: 'task1',
       startDate: 'startDate1',
       endDate: 'endDate1'
     }, {
-      id: 'b2',
       index: '1',
+      parent: '',
       task: 'task2',
       startDate: 'startDate2',
       endDate: 'endDate2'
     }, {
-      id: 'c3',
       index: '2',
+      parent: '',
       task: 'task3',
       startDate: 'startDate3',
       endDate: 'endDate3'
@@ -28,31 +35,36 @@ describe('TaskList', () => {
   ]);
 
   it('should render', () => {
+    const moveTaskSpy = jest.fn(),
+      indentTaskSpy = jest.fn(),
+      outdentTaskSpy = jest.fn(),
+      taskList = renderer.create(
+        <TaskListContext
+          taskList={mockTaskList}
+          moveTask={moveTaskSpy}
+          indentTask={indentTaskSpy}
+          outdentTask={outdentTaskSpy}
+        />
+      );
+
+    expect(taskList).toMatchSnapshot();
+  });
+
+  it('should render a list of tasks', () => {
     const indentTaskSpy = jest.fn(),
       outdentTaskSpy = jest.fn(),
-      createTask = renderer.create(
-        <TaskList
+      taskList = shallow(
+        <TaskListContext
           taskList={mockTaskList}
           indentTask={indentTaskSpy}
           outdentTask={outdentTaskSpy}
         />
       );
 
-    expect(createTask).toMatchSnapshot();
-  });
-
-  it.skip('should render with "task," "startDate," and "endDate"', () => {
-    const createTask = shallow(
-        <CreateTask
-          onSubmitEditing=''
-          placeholder="test"
-        />
-      );
-
-    expect(createTask.find('input')).toHaveLength(3);
-    expect(createTask.find('.enterTask')).toHaveLength(1);
-    expect(createTask.find('.enterStartDate')).toHaveLength(1);
-    expect(createTask.find('.enterEndDate')).toHaveLength(1);
+    expect(taskList.find('Task')).toHaveLength(3);
+    // expect(createTask.find('.enterTask')).toHaveLength(1);
+    // expect(createTask.find('.enterStartDate')).toHaveLength(1);
+    // expect(createTask.find('.enterEndDate')).toHaveLength(1);
   });
 
   it.skip('should field changes', () => {
