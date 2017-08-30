@@ -73,7 +73,7 @@ describe('CreateTask', () => {
 
   it('should handle key presses', () => {
     const onSubmitEditingSpy = jest.fn(),
-      testEvent = { target: { name: 'task', value: 'a' }},
+      testEvent = {target: { name: 'task', value: 'a' }},
       createTask = shallow(
         <CreateTask
           onSubmitEditing={onSubmitEditingSpy}
