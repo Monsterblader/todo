@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskList should render 1`] = `
+<div
+  className="taskList"
+>
+  <p>
+    Task list
+  </p>
+  <hr />
+  <div
+    className="Example"
+  >
+    <div
+      className="singleTask"
+      id="0"
+      style={
+        Object {
+          "cursor": "move",
+          "fontSize": 25,
+          "fontWeight": "bold",
+          "opacity": 1,
+        }
+      }
+    >
+      <div
+        className="outdentTask"
+        onClick={[Function]}
+      >
+        Outdent
+      </div>
+      <div
+        className="indentTask"
+        onClick={[Function]}
+      >
+        Indent
+      </div>
+      <div>
+        <span>
+          task1
+        </span>
+        <span>
+          startDate1
+        </span>
+        <span>
+          endDate1
+        </span>
+      </div>
+      <hr />
+    </div>
+    <div
+      className="singleTask"
+      id="1"
+      style={
+        Object {
+          "cursor": "move",
+          "fontSize": 25,
+          "fontWeight": "bold",
+          "opacity": 1,
+        }
+      }
+    >
+      <div
+        className="outdentTask"
+        onClick={[Function]}
+      >
+        Outdent
+      </div>
+      <div
+        className="indentTask"
+        onClick={[Function]}
+      >
+        Indent
+      </div>
+      <div>
+        <span>
+          task2
+        </span>
+        <span>
+          startDate2
+        </span>
+        <span>
+          endDate2
+        </span>
+      </div>
+      <hr />
+    </div>
+    <div
+      className="singleTask"
+      id="2"
+      style={
+        Object {
+          "cursor": "move",
+          "fontSize": 25,
+          "fontWeight": "bold",
+          "opacity": 1,
+        }
+      }
+    >
+      <div
+        className="outdentTask"
+        onClick={[Function]}
+      >
+        Outdent
+      </div>
+      <div
+        className="indentTask"
+        onClick={[Function]}
+      >
+        Indent
+      </div>
+      <div>
+        <span>
+          task3
+        </span>
+        <span>
+          startDate3
+        </span>
+        <span>
+          endDate3
+        </span>
+      </div>
+      <hr />
+    </div>
+  </div>
+</div>
+`;
